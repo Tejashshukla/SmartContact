@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Show Contacts</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+						<p class="text-center" th:text="${session.message.content}"></p>
+						<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+					</div>
+					
+					<div class="card">
+						<div class="card-header text-center">
+							<div class="d-flex justify-content-between align-items-center">
+								<a href="/user/index" class="btn btn-secondary">
+									<i class="fas fa-arrow-left"></i> Back
+								</a>
+								<h3 class="mb-0">Your Contacts</h3>
+								<div style="width: 100px;"></div> <!-- Spacer for alignment -->
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="container text-center">
+								<a href="/user/add-contact" class="btn btn-primary">Add New Contact</a>
+							</div>
+							
+							<div class="table-responsive mt-3">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>Name</th>
+											<th>Email</th>
+											<th>Phone</th>
+											<th>Work</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="contact : ${contacts}">
+											<td th:text="${contact.name}"></td>
+											<td th:text="${contact.email}"></td>
+											<td th:text="${contact.phone}"></td>
+											<td th:text="${contact.work}"></td>
+											<td>
+												<a th:href="@{'/user/' + ${contact.id} + '/contact'}" class="btn btn-info btn-sm">View</a>
+												<a th:href="@{'/user/update-contact/' + ${contact.id}}" class="btn btn-primary btn-sm">Update</a>
+												<a th:href="@{'/user/delete/' + ${contact.id}}" class="btn btn-danger btn-sm">Delete</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							
+							<div class="container text-center" th:if="${contacts.totalPages > 1}">
+								<div class="btn-group">
+									<a th:href="@{/user/show-contacts/{page}(page=${currentPage - 1})}" 
+										class="btn btn-outline-primary" 
+										th:classappend="${currentPage == 0} ? 'disabled'">Previous</a>
+									
+									<a th:each="i : ${#numbers.sequence(0, contacts.totalPages - 1)}"
+										th:href="@{/user/show-contacts/{page}(page=${i})}"
+										class="btn btn-outline-primary"
+										th:classappend="${currentPage == i} ? 'active'"
+										th:text="${i + 1}"></a>
+									
+									<a th:href="@{/user/show-contacts/{page}(page=${currentPage + 1})}"
+										class="btn btn-outline-primary"
+										th:classappend="${currentPage == contacts.totalPages - 1} ? 'disabled'">Next</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  th:replace="base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>About Page</title>
+</head>
+<body>
+	<section class="container mt-5" style="background-image: url('../static/img/contact.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+		
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="text-center mb-4">About Smart Contact Manager</h1>
+				
+				<div class="card">
+					<div class="card-body">
+						<p class="lead">
+							Smart Contact Manager is a modern, secure, and efficient web application designed to help users manage their contacts in a smarter way. Built with Spring Boot and following industry best practices, this application provides a seamless experience for organizing and maintaining your important contacts.
+						</p>
+						
+						<h3 class="mt-4">Key Features</h3>
+						<ul class="list-group list-group-flush mb-4">
+							<li class="list-group-item">Secure user authentication and authorization</li>
+							<li class="list-group-item">Cloud-based contact storage</li>
+							<li class="list-group-item">Easy contact management with detailed information</li>
+							<li class="list-group-item">Profile customization with image upload</li>
+							<li class="list-group-item">Responsive design for all devices</li>
+							<li class="list-group-item">Rich text editing for contact descriptions</li>
+						</ul>
+						
+						<h3 class="mt-4">Technology Stack</h3>
+						<p>
+							The application is built using a robust technology stack:
+						</p>
+						<ul class="list-group list-group-flush mb-4">
+							<li class="list-group-item">Spring Boot for backend development</li>
+							<li class="list-group-item">Spring Security for authentication and authorization</li>
+							<li class="list-group-item">Thymeleaf for server-side templating</li>
+							<li class="list-group-item">Bootstrap for responsive UI design</li>
+							<li class="list-group-item">MongoDB for data storage</li>
+						</ul>
+						
+						<h3 class="mt-4">Security Features</h3>
+						<p>
+							Security is our top priority. The application includes:
+						</p>
+						<ul class="list-group list-group-flush mb-4">
+							<li class="list-group-item">Password encryption using BCrypt</li>
+							<li class="list-group-item">Session management</li>
+							<li class="list-group-item">CSRF protection</li>
+							<li class="list-group-item">Secure file upload handling</li>
+						</ul>
+						
+						<h3 class="mt-4">User Experience</h3>
+						<p>
+							We've designed the application with user experience in mind:
+						</p>
+						<ul class="list-group list-group-flush mb-4">
+							<li class="list-group-item">Intuitive navigation</li>
+							<li class="list-group-item">Clean and modern interface</li>
+							<li class="list-group-item">Responsive design for all screen sizes</li>
+							<li class="list-group-item">Real-time feedback for user actions</li>
+						</ul>
+						
+						<div class="text-center mt-4">
+							<a th:href="@{/signup}" class="btn btn-primary btn-lg">Get Started</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

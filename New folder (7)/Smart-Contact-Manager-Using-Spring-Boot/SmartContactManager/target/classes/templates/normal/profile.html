@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>Profile Page</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="card">
+						<div class="card-header text-center">
+							<div class="d-flex justify-content-between align-items-center">
+								<a href="/user/index" class="btn btn-secondary">
+									<i class="fas fa-arrow-left"></i> Back
+								</a>
+								<h3 class="mb-0">Your Profile</h3>
+								<div style="width: 100px;"></div> <!-- Spacer for alignment -->
+							</div>
+						</div>
+						<div class="card-body">
+							<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+								<p class="text-center" th:text="${session.message.content}"></p>
+								<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+							</div>
+							
+							<div class="text-center">
+								<img th:if="${user.imageUrl != 'default.png'}" th:src="@{'/img/' + ${user.imageUrl}}" 
+									class="img-fluid rounded-circle" style="max-width: 150px;" alt="Profile Image">
+								<img th:unless="${user.imageUrl != 'default.png'}" th:src="@{'/img/default.png'}" 
+									class="img-fluid rounded-circle" style="max-width: 150px;" alt="Default Profile Image">
+							</div>
+							
+							<form th:action="@{/user/update-profile}" method="post" enctype="multipart/form-data">
+								<div class="form-group">
+									<label for="name">Name</label>
+									<input type="text" class="form-control" id="name" name="name" th:value="${user.name}" required>
+								</div>
+								
+								<div class="form-group">
+									<label for="email">Email</label>
+									<input type="email" class="form-control" id="email" name="email" th:value="${user.email}" readonly>
+								</div>
+								
+								<div class="form-group">
+									<label for="about">About</label>
+									<textarea class="form-control" id="about" name="about" rows="3" th:text="${user.about}"></textarea>
+								</div>
+								
+								<div class="form-group">
+									<label for="profileImage">Profile Image</label>
+									<input type="file" class="form-control-file" id="profileImage" name="profileImage">
+								</div>
+								
+								<div class="container text-center">
+									<button type="submit" class="btn btn-primary">Update Profile</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

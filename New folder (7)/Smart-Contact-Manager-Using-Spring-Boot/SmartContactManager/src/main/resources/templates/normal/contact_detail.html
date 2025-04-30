@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Contact Detail</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="card">
+						<div class="card-header text-center">
+							<div class="d-flex justify-content-between align-items-center">
+								<a href="/user/show-contacts/0" class="btn btn-secondary">
+									<i class="fas fa-arrow-left"></i> Back
+								</a>
+								<h3 class="mb-0">Contact Details</h3>
+								<div style="width: 100px;"></div> <!-- Spacer for alignment -->
+							</div>
+						</div>
+						<div class="card-body">
+							<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+								<p class="text-center" th:text="${session.message.content}"></p>
+								<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+							</div>
+							
+							<div class="text-center">
+								<img th:if="${contact.image != 'contact.png'}" th:src="@{'/img/' + ${contact.image}}" 
+									class="img-fluid rounded-circle" style="max-width: 150px;" alt="Contact Image">
+								<img th:unless="${contact.image != 'contact.png'}" th:src="@{'/img/contact.png'}" 
+									class="img-fluid rounded-circle" style="max-width: 150px;" alt="Default Contact Image">
+							</div>
+							
+							<div class="mt-4">
+								<h4 class="text-center" th:text="${contact.name}"></h4>
+								<p class="text-center text-muted" th:text="${contact.work}"></p>
+							</div>
+							
+							<div class="mt-4">
+								<table class="table">
+									<tbody>
+										<tr>
+											<th>Email</th>
+											<td th:text="${contact.email}"></td>
+										</tr>
+										<tr>
+											<th>Phone</th>
+											<td th:text="${contact.phone}"></td>
+										</tr>
+										<tr>
+											<th>Second Name</th>
+											<td th:text="${contact.secondName}"></td>
+										</tr>
+										<tr>
+											<th>Description</th>
+											<td th:text="${contact.description}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							
+							<div class="container text-center mt-4">
+								<a th:href="@{'/user/update-contact/' + ${contact.id}}" class="btn btn-primary">Update</a>
+								<a th:href="@{'/user/delete/' + ${contact.id}}" class="btn btn-danger">Delete</a>
+								<button type="button" class="btn btn-info" data-toggle="modal" data-target="#shareModal">
+									<i class="fas fa-share-alt"></i> Share
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Share Modal -->
+		<div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="shareModalLabel">Share Contact</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form th:action="@{'/user/share-contact/' + ${contact.id}}" method="post">
+							<div class="form-group">
+								<label for="shareEmail">Share with (Email)</label>
+								<input type="email" class="form-control" id="shareEmail" name="shareEmail" required>
+							</div>
+							<div class="form-group">
+								<label for="shareMessage">Message (Optional)</label>
+								<textarea class="form-control" id="shareMessage" name="shareMessage" rows="3"></textarea>
+							</div>
+							<div class="text-center">
+								<button type="submit" class="btn btn-primary">Share Contact</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
